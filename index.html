@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<style type="text/css">
+		.container{
+			width:900px;
+			margin: 0 auto;
+		}
+		.circumplex{
+			width:100px;
+			height:100px;
+			background:#eee;
+			margin: 0 auto;
+			border:1px solid black;
+			position: relative;
+			overflow: hidden;
+			cursor: pointer;
+		}
+		.vertical{
+			width:50%;
+			height:100%;
+			background:transparent;			
+			position: absolute;
+			left:-1px;
+			border-right:1px dotted black;
+
+		}
+		.horizontal{
+			width: 100%;
+			height:50%;
+			background:transparent;
+			position: absolute;
+			bottom:0px;
+			border-top:1px dotted black;
+		}
+		.label{
+			position: absolute;
+			z-index: 1;
+			font-size:10px;
+		}
+		.top{
+			left:35%;
+			top:-15%;
+		}
+
+		.left{
+			top:25%;
+			left:0%;
+		}
+		.right{
+			top:25%;
+			right:0%;
+		}
+		.bottom{
+			bottom: -15%;
+			left:32%;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div id="value" style='text-align: center'></div>
+		<div class="circumplex" id="circumplex">
+
+		<div id="circleNotif" style="position: absolute;border: solid 1px #cc00cc;border-radius: 20px;width: 10px;height: 10px;transition: all 1s"></div>
+			<div class="label top">
+				<h6>PUMPED</h6>
+			</div>
+			<div class="label left">
+				<h6>NEGATIVE</h6>
+			</div>
+			<div class="label right">
+				<h6>POSITIVE</h6>
+			</div>
+			<div class="label bottom">
+				<h6>RELAXED</h6>
+			</div>
+			<div class="vertical">
+			</div>
+			<div class="horizontal">
+			</div>
+		</div>
+	</div>
+<script>
+	$( '#circumplex' ).click( function(e)
+        {
+            var coordX = ( e.pageX - $( this ).offset().left - ( $( this ).width()  * 0.5 ) );
+            var coordY = -( e.pageY - $( this ).offset().top  - ( $( this ).height() * 0.5 ) );
+            var x = coordX.toFixed(1);
+            var y = coordY.toFixed(1);
+
+            var posX = e.pageX - $(this).offset().left;
+            var posY = e.pageY - $(this).offset().top;
+            mark = document.getElementById('circleNotif').style.top = posY-5 + 'px';
+            mark = document.getElementById('circleNotif').style.left = posX-5 + 'px';
+
+            var angle = Math.atan2(y,x);
+            var deg = angle * (180/Math.PI);
+            if(deg < 0 ){
+            	deg = 360 + deg;
+            }
+            document.getElementById('value').innerHTML = deg;
+            /*FIRST QUADRANT*/
+            // if(deg>=0 && deg <= 45){
+            // 	document.getElementById('value').innerHTML = 'PLEASURE';
+            // }
+            // if(deg>=46 && deg <= 90){
+            // 	document.getElementById('value').innerHTML = 'EXCITEMENT';
+            // }
+            // /*SECOND QUADRANT*/
+            // if(deg>=91 && deg <= 135){
+            // 	document.getElementById('value').innerHTML = 'AROUSAL';
+            // }
+            // if(deg>=136 && deg <= 180){
+            // 	document.getElementById('value').innerHTML = 'DISTRESS';
+            // }
+
+            // /*THIRD QUADRANT*/
+            // if(deg >=-179 && deg <= -136){
+            // 	document.getElementById('value').innerHTML = 'DISPLEASURE';
+            // }
+            // if(deg >= -135 && deg <= -91){
+            // 	document.getElementById('value').innerHTML = 'DEPRESSION';
+            // }
+
+            // /*FOURTH QUADRANT*/
+            // if(deg >=-90 && deg <= -46){
+            // 	document.getElementById('value').innerHTML = 'SLEEPINESS';
+            // }
+            // if(deg <= -0 && deg >= -45){
+            // 	document.getElementById('value').innerHTML = 'RELAXATION';
+            // }
+        });
+</script>
+</body>
+</html>
